@@ -1,26 +1,52 @@
-#!/bin/sh
+#!/bin/bash 
+ 
+echo "\033[0;32mCréer un cluster p3 avec deux pods \033[0;0m" 
+k3d cluster create p3 --api-port 6443 -p 8080:80@loadbalancer --agents 2
+echo "\033[0;32mvotre cluster est encours de création\033[0;0m"
+sleep 5
+echo "\033[0;32mVérification que le cluster a bien été créé \033[0;0m" 
+kubectl cluster-info
+echo "\033[0;32mListe des nœuds du cluster:\033[0;0m"
+kubectl get nodes
+echo "\033[0;32mListe des pods du système:\033[0;0m"
+kubectl get pods -A
 
-#echo "Créer un cluster avec deux pods "
+ 
 
-#sudo k3d cluster create p3 --api-port 6443 -p 8080:80@loadbalancer --agents 2
+echo "\033[0;32mCréer les namspaces argcd et dev \033[0;0m"
+kubectl create namespace dev 
+kubectl create namespace argocd 
+sleep 2 
+echo "\033[0;32mles deux namespace sont crées \033[0;0m" 
 
-#echo "votre cluster est encours de création"
-#sleep 5
-#echo "Vérification de si le cluster a été bien créer"
-#kubectl cluster-info
+ 
 
+echo "\033[0;32mInstaller Argocd dans le namespace argocd\033[0;0m" 
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
+ 
+echo "\033[0;32mAttendre que tous les pods dans le namespace argocd atteignent l'état Ready\033[0;0m"
+kubectl wait -n argocd --for=condition=Ready pods --all 
+sleep 2 
 
-#echo "Créer les namspaces argcd et dev"
-#sudo kubectl create namespace dev
-#sudo kubectl create namespace argocd
-#sleep 2
-#echo "les deux namespace sont crées"
-
-
-#echo “Installer Argocd dans le namespace argocd”
-#sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-#sleep 2
-
-echo “Appliquer la configuration de l’ingress “
-sudo kubectl apply -f ../confs/argocd-ingress.yaml -n argocd
+ 
+echo "\033[0;32mAppliquer la configuration de l’ingress\033[0;0m" 
+kubectl apply -f ./p3/confs/argocd-ingress.yaml -n argocd 
 sleep 2
+ 
+echo "\033[0;32m Changer le mot de passe \033[0;0m " 
+kubectl -n argocd patch secret argocd-secret \
+	-p '{"stringData": { 
+		"admin.password": "$2a$12$jxnCCcR.YqDBAckevqSZreuDLjRKRUqLulaEFDqBa0Qb9mt5UvP3W", 
+		"admin.passwordMtime": "'$(date +%FT%T%Z)'" 
+}}' 
+sleep 2
+
+#echo "\033[0;32mForwarde Port\033[0;0m"
+#kubectl port-forward svc/argocd-server -n argocd 8081:80
+#sleep 2
+
+#echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
+#kubectl apply -f  ./p3/confs/application.yaml -n argocd
+#argocd app sync wil-playground
+
+

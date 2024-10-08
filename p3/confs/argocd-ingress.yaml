@@ -4,6 +4,7 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
+    kubernetes.io/ingress.allow-http: "true"
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
