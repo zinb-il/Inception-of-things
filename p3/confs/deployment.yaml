@@ -1,34 +1,37 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name: wil-playground 
-  namespace: dev 
+  name: ziloughm
+  namespace: dev
+  annotations:
+    display-name: "*redacted*" 
 spec: 
   replicas: 1 
   selector: 
     matchLabels: 
-      app: wil-playground 
+      app: wil-playground
   template: 
     metadata: 
       labels: 
-        app: wil-playground 
+        app: wil-playground
     spec: 
       containers: 
-        - name: wil-playground 
+        - name: wil-playground
           image: wil42/playground:v1 
           ports: 
-            - containerPort: 8888
+            - containerPort: 8880
 --- 
 
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: wil-playground-service 
+  name: ziloughm-service 
   namespace: dev 
 spec: 
   selector: 
-    app: wil-playground 
+    app: ziloughm 
   ports: 
     - protocol: TCP 
       port: 8888
-      targetPort: 8888
+      targetPort: 8880
+      nodePort: 30007

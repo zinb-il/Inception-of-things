@@ -28,7 +28,11 @@ echo "\033[0;32mAttendre que tous les pods dans le namespace argocd atteignent l
 kubectl wait -n argocd --for=condition=Ready pods --all 
 sleep 2 
 
- 
+echo "\033[0;32mAppliquer la configuration de la ConfigMap\033[0;0m" 
+kubectl apply -f ./p3/confs/argocd-config-map.yaml -n argocd 
+sleep 2
+
+
 echo "\033[0;32mAppliquer la configuration de l’ingress\033[0;0m" 
 kubectl apply -f ./p3/confs/argocd-ingress.yaml -n argocd 
 sleep 2
@@ -41,12 +45,12 @@ kubectl -n argocd patch secret argocd-secret \
 }}' 
 sleep 2
 
-#echo "\033[0;32mForwarde Port\033[0;0m"
-#kubectl port-forward svc/argocd-server -n argocd 8081:80
-#sleep 2
 
-#echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
-#kubectl apply -f  ./p3/confs/application.yaml -n argocd
+echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
+kubectl apply -f  ./p3/confs/application.yaml -n argocd
+sleep 2
 #argocd app sync wil-playground
+sleep 2
+
 
 
