@@ -49,8 +49,6 @@ sleep 2
 echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
 kubectl apply -f  ./p3/confs/application.yaml -n argocd
 sleep 2
-#argocd app sync wil-playground
-sleep 2
 
 
 

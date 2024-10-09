@@ -1,10 +1,8 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name: ziloughm
+  name: wil-playground
   namespace: dev
-  annotations:
-    display-name: "*redacted*" 
 spec: 
   replicas: 1 
   selector: 
@@ -19,19 +17,40 @@ spec:
         - name: wil-playground
           image: wil42/playground:v1 
           ports: 
-            - containerPort: 8880
+            - containerPort: 8888
 --- 
 
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: ziloughm-service 
+  name: wil-playground-service 
   namespace: dev 
 spec: 
   selector: 
-    app: ziloughm 
+    app: wil-playground 
   ports: 
     - protocol: TCP 
       port: 8888
-      targetPort: 8880
-      nodePort: 30007
+      targetPort: 8888
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wil-playground-ingress
+  namespace: dev
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web 
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: traefik
+  rules:
+    - http:
+        paths:
+          - path: /app
+            pathType: Prefix
+            backend:
+              service:
+                name: wil-playground-service
+                port:
+                  number: 8888

@@ -5,14 +5,13 @@ metadata:
   namespace: argocd
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
-#    kubernetes.io/ingress.allow-http: "true"
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: traefik
   rules:
     - http:
         paths:
-          - path: /
+          - path: /argocd
             pathType: Prefix
             backend:
               service:
