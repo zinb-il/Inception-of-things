@@ -1,0 +1,28 @@
+Vagrant.configure("2") do |config|
+  config.vm.define "yrimahS" do |master|
+    ENV["IS_MASTER_NODE"] = "true"
+    master.vm.box = "generic/alpine312"
+    master.vm.hostname = "yrimahS"
+    master.vm.box_check_update = false
+    master.vm.network "private_network", ip: "192.168.56.110"
+    master.vm.synced_folder "./confs", "/vagrant_data", type: "virtualbox"
+    master.vm.provision "shell", path: "scripts/master.sh"
+    master.vm.provider "virtualbox" do |vb| 
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+  end
+  config.vm.define "yrimahSW" do |worker|
+    ENV["IS_MASTER_NODE"] = "false"
+    worker.vm.hostname = "yrimahSW"
+    worker.vm.box = "generic/alpine312"
+    worker.vm.box_check_update = false
+    worker.vm.network "private_network", ip: "192.168.56.111"
+    worker.vm.provider "virtualbox" do |vb|
+      vb.cpus = 1
+      vb.memory = "1024"
+    end
+    worker.vm.synced_folder "./confs", "/vagrant_data", type: "virtualbox"
+    worker.vm.provision "shell", path: "scripts/worker.sh"
+  end
+end
