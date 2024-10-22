@@ -13,7 +13,7 @@ spec:
       labels: 
         app: wil-playground
     spec: 
-      containers: 
+      containers:
         - name: wil-playground
           image: wil42/playground:v1 
           ports: 
