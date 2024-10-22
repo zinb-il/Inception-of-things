@@ -14,4 +14,4 @@ bonus:
 
 re : clean all
 
-.PHONY: all clean re env
+.PHONY: all clean re env bonus
