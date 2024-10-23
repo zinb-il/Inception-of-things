@@ -50,5 +50,9 @@ echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
 kubectl apply -f  ./p3/confs/application.yaml -n argocd
 sleep 2
 
+echo "\033[0;32mAttendre que tous les pods dans le namespace dev atteignent l'état Ready\033[0;0m"
+kubectl wait -n dev --for=condition=Ready pods --all 
+sleep 2 
+
 
 
