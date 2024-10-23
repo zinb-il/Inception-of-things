@@ -70,7 +70,7 @@ gitlab:
     deployments:
       default:
         ingress:
-          path: /gitlab
+          path: /
           pathType: Prefix
     ingress:
       enabled: true
