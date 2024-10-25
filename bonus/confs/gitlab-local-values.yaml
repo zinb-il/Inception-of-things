@@ -6,6 +6,9 @@ global:
     https: false
     email: zinb9419@gmail.com
     relativePath: /gitlab
+  service:
+    http:
+      port: 8080
 
 certmanager:
   install: false
@@ -14,24 +17,33 @@ certmanager-issuer:
   enabled: false
   email: zinb9419@gmail.com
 
-
 nginx-ingress:
   enabled: true
   controller:
     config:
       use-forwarded-headers: "true"
+    service:
+      ports:
+        http: 8080
     ingressClassResource:
       name: gitlab-nginx
       enabled: true
       default: false
     admissionWebhooks:
       enabled: false
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
 
 gitlab-runner:
   install: false
 
 prometheus:
-  install: false 
+  install: false
 
 postgresql:
   install: true
@@ -93,9 +105,11 @@ gitlab:
     workhorse:
       extraArgs:
         - --relative-url-root=/gitlab
-  task-runner:
+
+  toolbox:
     backups:
       extraArgs: ["--relative-url-root=/gitlab"]
+
   migrations:
     extraEnv:
       GITLAB_RELATIVE_URL_ROOT: '/gitlab'

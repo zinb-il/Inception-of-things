@@ -12,6 +12,10 @@ env :
 clean:
 	k3d cluster delete $(NAME)
 
+bclean:
+	helm uninstall gitlab -n gitlab
+	kubectl delete all --all -n gitlab
+
 bonus:
 	sh bonus/scripts/installation-tools.sh
 
