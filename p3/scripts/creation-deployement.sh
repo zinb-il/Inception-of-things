@@ -22,8 +22,9 @@ echo "\033[0;32mles deux namespace sont crées \033[0;0m"
  
 
 echo "\033[0;32mInstaller Argocd dans le namespace argocd\033[0;0m" 
-# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
-kubectl apply -n argocd -f ./p3/confs/install-argocd.yaml 
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
+# kubectl apply -n argocd -f ./p3/confs/install-argocd.yaml
+kubectl patch deployment argocd-server -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--rootpath"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "/argo-cd"}]' 
  
 echo "\033[0;32mAttendre que tous les pods dans le namespace argocd atteignent l'état Ready\033[0;0m"
 kubectl wait -n argocd --for=condition=Ready pods --all 
