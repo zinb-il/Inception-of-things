@@ -20,4 +20,3 @@ re : clean all
 
 .PHONY: all clean re env
 
-# kubectl rollout restart deployment argocd-server -n argocd

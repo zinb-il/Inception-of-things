@@ -23,7 +23,6 @@ echo "\033[0;32mles deux namespace sont crées \033[0;0m"
 
 echo "\033[0;32mInstaller Argocd dans le namespace argocd\033[0;0m" 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml 
-# kubectl apply -n argocd -f ./p3/confs/install-argocd.yaml
 
 
 echo "\033[0;32mAttendre que tous les pods dans le namespace argocd atteignent l'état Ready\033[0;0m"
@@ -59,4 +58,8 @@ sleep 2
 echo "\033[0;32mCéer une alias pour la commande kubectl\033[0;0m"
 alias k="kubectl" 
 rm -fr kubectl argocd
+
+
+# kubectl rollout restart deployment argocd-server -n argocd
+# kubectl logs deployment/argocd-server -n argocd
 
