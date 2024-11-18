@@ -10,7 +10,7 @@ sleep 2
 helm install gitlab gitlab/gitlab --namespace gitlab --values ../bonus/confs/gitlab-local-values.yaml
 sleep 2
 echo "\033[0;32mAttendre que toutes les pods soient prêtes\033[0;0m"
-kubectl wait -n gitlab --for=condition=Ready pods --all
+kubectl wait -n gitlab --for=condition=Ready pods --all --timeout=600s
 kubectl get pods -n gitlab
 sleep 2
 

@@ -11,6 +11,7 @@ env :
 
 clean:
 	k3d cluster delete $(NAME)
+	docker system prune -a -f
 
 bclean:
 	helm uninstall gitlab -n gitlab

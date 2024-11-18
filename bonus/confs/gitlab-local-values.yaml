@@ -19,7 +19,10 @@ certmanager-issuer:
   email: zinb9419@gmail.com
 
 nginx-ingress:
-  enabled: false
+  enabled: true
+  controller:
+    service:
+      type: LoadBalancer
 
 gitlab-runner:
   install: false
@@ -27,40 +30,19 @@ gitlab-runner:
 prometheus:
   install: false
 
-
 gitlab:
   webservice:
     minReplicas: 1
     maxReplicas: 1
-    resources:
-      requests:
-        cpu: 200m
-        memory: 512Mi
-      limits:
-        cpu: 300m
-        memory: 800Mi
 
   sidekiq:
     minReplicas: 1
     maxReplicas: 1
-    resources:
-      requests:
-        cpu: 50m
-        memory: 350Mi
-      limits:
-        cpu: 100m
-        memory: 500Mi
 
   gitlab-shell:
     minReplicas: 1
     maxReplicas: 1
-    resources:
-      requests:
-        cpu: 50m
-        memory: 150Mi
-      limits:
-        cpu: 100m
-        memory: 200Mi
+
   gitaly:
     resources:
       requests:
