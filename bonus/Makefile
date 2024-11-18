@@ -1,13 +1,13 @@
 NAME = p3
 
 all:
-	sh p3/scripts/creation-deployement.sh
+	sh ../p3/scripts/creation-deployement.sh
 
 docker :
-	sh p3/scripts/install-docker.sh
+	sh ../p3/scripts/install-docker.sh
 
 env :
-	sh p3/scripts/installation-tools.sh
+	sh ../p3/scripts/installation-tools.sh
 
 clean:
 	k3d cluster delete $(NAME)
@@ -17,7 +17,7 @@ bclean:
 	kubectl delete all --all -n gitlab
 
 bonus:
-	sh bonus/scripts/installation-tools.sh
+	sh scripts/installation-tools.sh
 
 re : clean all
 

@@ -8,5 +8,5 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   server.insecure: "true"
-  server.basehref: "/argo-cd"
-  # server.rootpath: "/argo-cd"
+  server.basehref: "/argocd"
+  # server.rootpath: "/argocd"
