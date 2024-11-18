@@ -30,16 +30,16 @@ kubectl wait -n argocd --for=condition=Ready pods --all
 sleep 2 
 
 echo "\033[0;32mChanger l'url d'arocd\033[0;0m"
-kubectl patch deployment argocd-server -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--rootpath"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "/argocd"}]'
+kubectl patch deployment argocd-server -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--insecure"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--rootpath"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "/argocd"}]'
 sleep 2
 
 echo "\033[0;32mAppliquer la configuration de la ConfigMap\033[0;0m" 
-kubectl apply -f ./p3/confs/argocd-config-map.yaml -n argocd 
+kubectl apply -f ../p3/confs/argocd-config-map.yaml -n argocd 
 sleep 2
 
 
 echo "\033[0;32mAppliquer la configuration de l’ingress\033[0;0m" 
-kubectl apply -f ./p3/confs/argocd-ingress.yaml -n argocd 
+kubectl apply -f ../p3/confs/argocd-ingress.yaml -n argocd 
 sleep 2
  
 echo "\033[0;32mChanger le mot de passe \033[0;0m " 
@@ -62,4 +62,5 @@ rm -fr kubectl argocd
 
 # kubectl rollout restart deployment argocd-server -n argocd
 # kubectl logs deployment/argocd-server -n argocd
+# kubectl get deployment argocd-server -n argocd -o yaml
 
