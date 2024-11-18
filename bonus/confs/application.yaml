@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1 
+kind: Application 
+metadata: 
+  name: ziloughm
+  namespace: argocd 
+spec: 
+  project: default
+  source: 
+    repoURL: 
+    path: p3/confs 
+  destination: 
+    server: https://kubernetes.default.svc 
+    namespace: dev 
+  syncPolicy: 
+    automated: 
+      prune: true 
+      selfHeal: true

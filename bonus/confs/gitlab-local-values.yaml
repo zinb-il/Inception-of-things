@@ -1,43 +1,25 @@
 global:
-  edition: ce
   hosts:
     domain: localhost
     externalIP: "127.0.0.1"
     https: false
     email: zinb9419@gmail.com
-    relativePath: /gitlab
   service:
     http:
       port: 8080
+  rails:
+    bootsnap:
+      enabled: false
 
 certmanager:
   install: false
 
 certmanager-issuer:
-  enabled: false
+  enabled: true
   email: zinb9419@gmail.com
 
 nginx-ingress:
-  enabled: true
-  controller:
-    config:
-      use-forwarded-headers: "true"
-    service:
-      ports:
-        http: 8080
-    ingressClassResource:
-      name: gitlab-nginx
-      enabled: true
-      default: false
-    admissionWebhooks:
-      enabled: false
-    resources:
-      requests:
-        cpu: 50m
-        memory: 100Mi
-      limits:
-        cpu: 100m
-        memory: 200Mi
+  enabled: false
 
 gitlab-runner:
   install: false
@@ -45,54 +27,11 @@ gitlab-runner:
 prometheus:
   install: false
 
-postgresql:
-  install: true
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 200m
-      memory: 512Mi
-
-redis:
-  install: true
-  resources:
-    requests:
-      cpu: 50m
-      memory: 128Mi
-    limits:
-      cpu: 100m
-      memory: 256Mi
-
-minio:
-  install: true
-  resources:
-    requests:
-      cpu: 50m
-      memory: 128Mi
-    limits:
-      cpu: 100m
-      memory: 256Mi
 
 gitlab:
   webservice:
     minReplicas: 1
     maxReplicas: 1
-    deployments:
-      default:
-        ingress:
-          path: /
-          pathType: Prefix
-    ingress:
-      enabled: true
-      path: /gitlab(/|$)(.*)
-      pathType: Prefix
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
-        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-        nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
     resources:
       requests:
         cpu: 200m
@@ -100,19 +39,6 @@ gitlab:
       limits:
         cpu: 300m
         memory: 800Mi
-    extraEnv:
-      GITLAB_RELATIVE_URL_ROOT: '/gitlab'
-    workhorse:
-      extraArgs:
-        - --relative-url-root=/gitlab
-
-  toolbox:
-    backups:
-      extraArgs: ["--relative-url-root=/gitlab"]
-
-  migrations:
-    extraEnv:
-      GITLAB_RELATIVE_URL_ROOT: '/gitlab'
 
   sidekiq:
     minReplicas: 1
@@ -124,8 +50,6 @@ gitlab:
       limits:
         cpu: 100m
         memory: 500Mi
-    extraEnv:
-      GITLAB_RELATIVE_URL_ROOT: '/gitlab'
 
   gitlab-shell:
     minReplicas: 1
@@ -137,7 +61,6 @@ gitlab:
       limits:
         cpu: 100m
         memory: 200Mi
-
   gitaly:
     resources:
       requests:

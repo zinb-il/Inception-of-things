@@ -7,7 +7,7 @@ docker :
 	sh ../p3/scripts/install-docker.sh
 
 env :
-	sh ../p3/scripts/installation-tools.sh
+	sh scripts/installation-helm.sh
 
 clean:
 	k3d cluster delete $(NAME)
@@ -15,6 +15,7 @@ clean:
 bclean:
 	helm uninstall gitlab -n gitlab
 	kubectl delete all --all -n gitlab
+	kubectl delete namespaces gitlab
 
 bonus:
 	sh scripts/installation-tools.sh
