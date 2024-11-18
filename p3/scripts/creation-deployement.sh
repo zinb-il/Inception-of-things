@@ -53,7 +53,7 @@ sleep 2
 
 
 echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
-kubectl apply -f  ./p3/confs/application.yaml -n argocd
+kubectl apply -f  ../p3/confs/application.yaml -n argocd
 sleep 2
 
 echo "\033[0;32mCéer une alias pour la commande kubectl\033[0;0m"
