@@ -15,7 +15,7 @@ helm install gitlab gitlab/gitlab \
     --set gitlab-runner.install=false
 
 echo "\033[0;32mAttendre que tous les pods dans le namespace gitlab atteignent l'état Ready\033[0;0m"
-kubectl wait -n gitlab --for=condition=Ready pods --all --timeout=100s
+kubectl wait -n gitlab --for=condition=Ready pods --all --timeout=120s
 kubectl get pods -n gitlab
 
 echo "\033[0;32mObtenir le mot de passe initial\033[0;0m"
