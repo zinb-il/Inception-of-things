@@ -33,10 +33,6 @@ echo "\033[0;32mChanger l'url d'arocd\033[0;0m"
 kubectl patch deployment argocd-server -n argocd --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--insecure"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--rootpath"}, {"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "/argocd"}]'
 sleep 2
 
-echo "\033[0;32mAppliquer la configuration de la ConfigMap\033[0;0m" 
-kubectl apply -f ../p3/confs/argocd-config-map.yaml -n argocd 
-sleep 2
-
 
 echo "\033[0;32mAppliquer la configuration de l’ingress\033[0;0m" 
 kubectl apply -f ../p3/confs/argocd-ingress.yaml -n argocd 
@@ -51,7 +47,7 @@ kubectl -n argocd patch secret argocd-secret \
 sleep 2
 
 
-echo "\033[0;32mAppliquer l'application ArgoCD\033[0;30m"
+echo "\033[0;32mAppliquer les configurations de l'application ArgoCD\033[0;30m"
 kubectl apply -f  ../p3/confs/application.yaml -n argocd
 sleep 2
 

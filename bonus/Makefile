@@ -17,6 +17,11 @@ bclean:
 	helm uninstall gitlab -n gitlab
 	kubectl delete all --all -n gitlab
 	kubectl delete namespaces gitlab
+	kubectl delete namespaces devbonus
+
+appbonus:
+	sh ../bonus/scripts/installation-app.sh
+
 
 bonus:
 	sh scripts/installation-tools.sh

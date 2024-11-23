@@ -1,16 +1,17 @@
 apiVersion: argoproj.io/v1alpha1 
 kind: Application 
 metadata: 
-  name: ziloughm
+  name: gitlab-ziloughm
   namespace: argocd 
 spec: 
   project: default
   source: 
-    repoURL: 
-    path: p3/confs 
+    repoURL: http://gitlab-webservice-default.gitlab.svc.cluster.local:8181/root/inception-of-things.git
+    targetRevision: HEAD 
+    path: bonus/confs 
   destination: 
     server: https://kubernetes.default.svc 
-    namespace: dev 
+    namespace: devbonus 
   syncPolicy: 
     automated: 
       prune: true 
