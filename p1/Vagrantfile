@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.define "yrimahS" do |master|
-    master.vm.box = "generic/alpine318"
+    master.vm.box = "debian/bookworm64"
     master.vm.hostname = "yrimahS"
     master.vm.box_check_update = false
     master.vm.network "private_network", ip: "192.168.56.110"
@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.define "yrimahSW" do |worker|
     worker.vm.hostname = "yrimahSW"
-    worker.vm.box = "generic/alpine318"
+    worker.vm.box = "debian/bookworm64"
     worker.vm.box_check_update = false
     worker.vm.network "private_network", ip: "192.168.56.111"
     worker.vm.provider "virtualbox" do |vb|

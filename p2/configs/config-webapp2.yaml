@@ -1,0 +1,35 @@
+apiVersion: apps/v1   
+kind: Deployment    
+metadata:            
+  name: webapp2-deployment    
+  labels:        
+    app: webapp2   
+spec:            
+  replicas: 3    
+  selector:       
+    matchLabels: 
+      app: webapp2
+  template:        
+    metadata:
+      labels:    
+        app: webapp2
+    spec:        
+      containers:    
+      - name: webapp2
+        image: yrimah/webapp2
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp2-service
+spec:
+  selector:
+    app: webapp2
+  # type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      # nodePort: 30002

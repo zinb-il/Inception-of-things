@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Box Settings #
+  config.vm.box = "debian/bookworm64"
+  config.vm.box_check_update = false
+  config.vm.hostname = "yrimahS"
+
+  # Provider Settings #
+  config.vm.define "yrimahS" do |node|
+    node.vm.provider "virtualbox" do |vb|
+    
+      vb.memory = 2192
+      vb.cpus = 2
+      vb.name = "yrimahS"
+    end
+
+    # Network Settings #
+    node.vm.network "private_network", ip: "192.168.56.110"
+    
+    # Folder Sync Settings #
+    node.vm.synced_folder "./configs", "/home/vagrant/configs"
+    node.vm.synced_folder "./scripts", "/home/vagrant/scripts"
+
+    # Provision Settings #
+    
+    # Path to a Script
+    node.vm.provision "shell", path: "./scripts/install-k3s.sh"
+    
+    # Inline shell code
+    # node.vm.provision "shell", inline: <<-SHELL
+      
+    # SHELL
+    #
+    # node.vm.provision :shell, :inline => SHELL
+    
+    # SHELL
+  end
+end

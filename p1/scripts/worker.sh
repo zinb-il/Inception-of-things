@@ -1,3 +1,8 @@
+
+apt update
+
+apt-get install curl net-tools -y
+
 while [ ! -e "/vagrant_data/node-token.txt" ]
 do
   sleep 1

@@ -1,20 +1,20 @@
 apiVersion: apps/v1 
 kind: Deployment 
 metadata: 
-  name: wil-playground-bonnus
+  name: wil-playground-bonus
   namespace: devbonus
 spec: 
   replicas: 1 
   selector: 
     matchLabels: 
-      app: wil-playground-bonnus
+      app: wil-playground-bonus
   template: 
     metadata: 
       labels: 
-        app: wil-playground-bonnus
+        app: wil-playground-bonus
     spec: 
       containers:
-        - name: wil-playground-bonnus
+        - name: wil-playground-bonus
           image: wil42/playground:v1 
           ports: 
             - containerPort: 8889
@@ -23,11 +23,11 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: wil-playground-bonnus-service 
+  name: wil-playground-bonus-service 
   namespace: devbonus 
 spec: 
   selector: 
-    app: wil-playground-bonnus 
+    app: wil-playground-bonus 
   ports: 
     - protocol: TCP 
       port: 8889
@@ -37,7 +37,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wil-playground-bonnus-ingress
+  name: wil-playground-bonus-ingress
   namespace: devbonus
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web 
@@ -51,6 +51,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: wil-playground-bonnus-service
+                name: wil-playground-bonus-service
                 port:
                   number: 8889
